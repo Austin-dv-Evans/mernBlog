@@ -6,6 +6,7 @@ import Header from './components/layout/Header.js'
 import Navbar from './components/layout/Navbar.js'
 import Footer from './components/layout/Footer.js'
 import Articles from './components/Articles.js'
+import AddArticle from './components/AddArticle.js'
 import axios from 'axios'
 
 
@@ -17,7 +18,7 @@ function App() {
   
   useEffect(() => {
     axios
-      .get('http://localhost:8080/articles')
+      .get('/articles')
       .then(res => setPosts(res.data))
       .catch(error => console.log(error))
   })
@@ -26,7 +27,8 @@ function App() {
       <div className="App">
         <Header />
         <Navbar />
-        <Route to="/" render={() => <Articles posts={posts} /> } />
+        <Route path="/" render={() => <Articles posts={posts} /> } />
+        <Route path="/add-article" component={AddArticle}/>
         <Footer />
       </div>
   );
