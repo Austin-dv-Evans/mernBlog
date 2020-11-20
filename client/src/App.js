@@ -27,7 +27,7 @@ function App() {
       <div className="App">
         <Header />
         <Navbar />
-        <Route path="/" render={() => <Articles posts={posts} /> } />
+        <Route exact path="/" render={() => <Articles posts={posts} /> } />
         <Route path="/add-article" component={AddArticle}/>
         <Footer />
       </div>

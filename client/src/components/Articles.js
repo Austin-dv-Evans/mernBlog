@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import spinner from '../components/layout/loadingIcon.jpg'
 
@@ -7,20 +8,19 @@ const Articles = ({posts}) => {
         <MainContainer>
             {!posts.length ? <img src={spinner} alt="loading"/> :
             posts.map((article, key) => (
-                <div className="container">
+                <div className="container" key={key}>
                 <h2>{article.title}</h2>
                 <p>{article.article}</p>
                 <span className="badge badge-secondary p-2">{article.authorname}</span>
                 <div className="row my-3" >
                     <div className="col-sm-2">
-                        <a href="/add" className="btn btn-outline-success">
+                        <Link to="/edit" className="btn btn-outline-success" />
                             Edit
-                        </a>
                     </div>
                     <div className="col-sm-2">
-                        <a href="/add" className="btn btn-outline-danger">
+                        <button to="/" className="btn btn-outline-danger">
                             Delete
-                        </a>
+                        </button>
                     </div>
                 </div>
                 </div>
