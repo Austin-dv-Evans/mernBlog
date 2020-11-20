@@ -1,16 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 
 
 
-const AddArticle = () => {
+const EditArticle = (props) => {
 
     const [title, setTitle] = useState('')
     const [article, setArticle] = useState('')
     const [authorname, setAuthorname] = useState('')
     const [message, setMessage] = useState('')
-
 
     const changeOnClick = e => {
         e.preventDefault()
@@ -25,17 +24,27 @@ const AddArticle = () => {
         setAuthorname('')
 
         axios
-            .post("/articles/add", articles)
+            .put(`/articles/update/${props.match.params.id}`, articles)
             .then(res => setMessage(res.data))
             .catch(err => {
                 console.log(err)
             })
     }
 
+    useEffect(() => {
+        axios.get(`/articles/${props.match.params.id}`)
+            .then(res => [
+                setTitle(res.data.title),
+                setArticle(res.data.article),
+                setAuthorname(res.data.authorname)
+            ])
+            .catch(err => console.log(err))
+    }, [props])
+
     return (
         <FormContainer>
             <div className="container">
-                <h1>Add New Article</h1>
+                <h1>Edit Article</h1>
                 <span className="message">{message}</span>
                 <form encType="multipart/form-data" onSubmit={changeOnClick} >
                 <div className="form-group">
@@ -61,14 +70,14 @@ const AddArticle = () => {
                         onChange={e => setArticle(e.target.value)}
                         className="form-control" rows="7"></textarea>
                 </div>
-                <button type="submit" className="btn btn-primary">Post Article</button>
+                <button type="submit" className="btn btn-primary">Update Article</button>
                 </form>
             </div>
         </FormContainer>
     )
 }
 
-export default AddArticle
+export default EditArticle
 
 // Form Container 
 
